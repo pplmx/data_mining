@@ -8,7 +8,6 @@
 """
 import re
 import urllib.request
-import urllib
 
 url = "http://www.qiushibaike.com"
 user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'

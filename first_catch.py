@@ -17,7 +17,14 @@ req = urllib.request.Request(url, headers={
 response = urllib.request.urlopen(req)
 content = response.read().decode('utf-8')
 # print(content)
-pattern = re.compile('<div.*?class="content">\n*?<span.*?</span>\n*?</div>')
+pattern = re.compile('<div.*?class="content">.*?<span>(.*?)</span>.*?</a>' + '(.*?<div.*?"stats".*?</div>)',
+                     re.RegexFlag.S)
 items = re.findall(pattern, content)
 for item in items:
-    print(item)
+    if re.search('img', item[1]):
+        # 再次匹配
+        patternA = re.compile('<a.*?>.*?<img src="(.*?)".*?>', re.RegexFlag.S)
+        img = patternA.findall(item[1])
+        print('段子：==> ' + item[0].replace('\n', ''), '\n', '段子图片：==> ' + img[0].replace('//', 'https://') + '\n')
+    else:
+        print('段子：==> ' + item[0].replace('\n', ''), '\n')

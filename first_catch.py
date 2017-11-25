@@ -4,7 +4,7 @@
 # @author  : mystic
 # @date    : 2017/11/22 20:14
 """
-    抓取网易云音乐歌词
+    第一次抓取
 """
 import re
 import urllib.request

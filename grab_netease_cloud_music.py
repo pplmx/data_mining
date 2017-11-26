@@ -18,19 +18,30 @@ def get_html(url, headers):
     return content
 
 
-spider_url = 'https://music.163.com/#/discover/playlist'
+def parse_html(html):
+    host = 'https://music.163.com'
+    soup = BeautifulSoup(html, 'lxml')
+    # 歌单图片[src]
+    playlist_img = soup.select('ul#m-pl-container li div img')
+    # 歌单名称和链接[title|href]
+    playlist_name = soup.select('ul#m-pl-container li div a.msk')
+    # 歌单播放量[text]
+    playlist_views = soup.select('ul#m-pl-container li div.bottom span.nb')
+    # 歌单创建者[title|href]
+    playlist_creator = soup.select('ul#m-pl-container li p > span + a')
+    for i in range(len(playlist_creator)):
+        print('歌单封面: ', playlist_img[i]['src'])
+        print('歌单名称: ', playlist_name[i]['title'])
+        print('歌单链接: ', host + playlist_name[i]['href'])
+        print('歌单播放量: ', playlist_views[i].text)
+        print('歌单创建者: ', playlist_creator[i]['title'])
+        print('创建者主页: ', host + playlist_creator[i]['href'], '\n')
+
+
+spider_url = 'https://music.163.com/discover/playlist'
 result = get_html(spider_url, headers={
     'User-Agent': 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)',
     'Host': 'music.163.com'
 })
-print(result)
-soup = BeautifulSoup(result, 'lxml')
-# 歌单图片[src]
-playlist_img = soup.select('ul#m-pl-container li div img')
-# 歌单名称和链接[title|href]
-playlist_name = soup.select('ul#m-pl-container li div a.msk')
-# 歌单播放量[text]
-playlist_views = soup.select('ul#m-pl-container li div.bottom span.nb')
-# 歌单创建者[title|href]
-playlist_creator = soup.select('ul#m-pl-container li p a')
+parse_html(result)
 

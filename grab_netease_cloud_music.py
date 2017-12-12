@@ -38,10 +38,11 @@ def parse_html(html):
         print('创建者主页: ', host + playlist_creator[i]['href'], '\n')
 
 
-spider_url = 'https://music.163.com/discover/playlist'
-result = get_html(spider_url, headers={
-    'User-Agent': 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)',
-    'Host': 'music.163.com'
-})
-parse_html(result)
+if __name__ == '__main__':
+    spider_url = 'https://music.163.com/discover/playlist'
+    result = get_html(spider_url, headers={
+        'User-Agent': 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)',
+        'Host': 'music.163.com'
+    })
+    parse_html(result)
 

@@ -10,7 +10,6 @@ import csv
 import os
 import time
 
-import pandas
 import xlrd as xlrd
 import xlwt as xlwt
 from bs4 import BeautifulSoup
@@ -112,11 +111,12 @@ if __name__ == '__main__':
     # save_path = 'd:/' + friend + '.csv'
     # get_shuoshuo(myself, upwd, friend, save_path)
     # 读取csv文件
-    # with open('d:/ss.csv', 'rt', encoding='UTF-8') as file:
-    #     read_csv = csv.reader(file)
-    #     for i in read_csv:
-    #         print(i)
-    moods = pandas.read_csv('d:/ss.csv', encoding='UTF-8')
-    print(moods.head(1))
+    # csv模块读取csv文件
+    with open('d:/ss.csv', 'rt', encoding='UTF-8') as file:
+        read_csv = csv.reader(file)
+        all_moods = [mood for mood in read_csv]
+    # pandas模块读取csv文件
+    # moods = pandas.read_csv('d:/ss.csv', encoding='UTF-8')
+    # print(moods.head())
     # for i in range(len(moods)):
     #     print(moods.iloc[i, 0], '==>', moods.iloc[i, 1])

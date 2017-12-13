@@ -128,6 +128,8 @@ def shuoshuo_analysis(file_path):
         print(len(words))
         print(set(words))
         print(len(set(words)))
+        # 去除长度为1的词
+        # words = list(filter(lambda word: len(word) > 1, words))
         print(Counter(words))
         # seg_list = jieba.cut(contents[0], HMM=True)
         # print("/".join(seg_list))

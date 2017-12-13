@@ -8,11 +8,15 @@
 """
 import csv
 import os
+import re
 import time
+from collections import Counter
 
+import jieba
 import xlrd as xlrd
 import xlwt as xlwt
 from bs4 import BeautifulSoup
+from numpy import array
 from selenium import webdriver
 from xlutils.copy import copy
 
@@ -103,6 +107,32 @@ def get_shuoshuo(my_qq, my_pwd, friend_qq, path):
             driver.quit()
 
 
+def shuoshuo_analysis(file_path):
+    # 读取csv文件
+    # csv模块读取csv文件
+    with open(file_path, 'rt', encoding='UTF-8') as file:
+        read_csv = csv.reader(file)
+        all_moods = [mood for mood in read_csv]
+        all_moods = array(all_moods)
+        shuoshuos = all_moods[:, 1]
+        phrases = []
+        # 分割(以特殊字符,如逗号,感叹号等,进行分割)+合拼成一维列表(将所有说说文字内容合并)
+        for shuoshuo in shuoshuos:
+            phrases += re.split(r'[^\u4E00-\u9FA5\w]+', shuoshuo)
+        # 去除空串
+        phrases = list(filter(lambda phrase: phrase != '', phrases))
+        words = []
+        for p in phrases:
+            words += jieba.cut(p, HMM=True)
+        print(words)
+        print(len(words))
+        print(set(words))
+        print(len(set(words)))
+        print(Counter(words))
+        # seg_list = jieba.cut(contents[0], HMM=True)
+        # print("/".join(seg_list))
+
+
 if __name__ == '__main__':
     # 爬取QQ空间好友动态,并保存到本地
     # myself = input('Please input your QQ: ')
@@ -110,13 +140,4 @@ if __name__ == '__main__':
     # friend = input('Please input your friend QQ: ')
     # save_path = 'd:/' + friend + '.csv'
     # get_shuoshuo(myself, upwd, friend, save_path)
-    # 读取csv文件
-    # csv模块读取csv文件
-    with open('d:/ss.csv', 'rt', encoding='UTF-8') as file:
-        read_csv = csv.reader(file)
-        all_moods = [mood for mood in read_csv]
-    # pandas模块读取csv文件
-    # moods = pandas.read_csv('d:/ss.csv', encoding='UTF-8')
-    # print(moods.head())
-    # for i in range(len(moods)):
-    #     print(moods.iloc[i, 0], '==>', moods.iloc[i, 1])
+    shuoshuo_analysis('d:/ss.csv')

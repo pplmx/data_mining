@@ -134,7 +134,7 @@ def shuoshuo_analysis(file_path):
         # 去除长度为1的词
         # words = list(filter(lambda word: len(word) > 1, words))
         print(Counter(words))
-        back_color = imread('pokemon.jpg')  # 解析该图片
+        back_color = imread('background.jpg')  # 解析该图片
         wc = WordCloud(background_color='white',  # 背景颜色
                        max_words=1000,  # 最大词数
                        mask=back_color,  # 以该参数值作图绘制词云，这个参数不为空时，width和height会被忽略
@@ -167,4 +167,4 @@ if __name__ == '__main__':
     # friend = input('Please input your friend QQ: ')
     # save_path = 'd:/' + friend + '.csv'
     # get_shuoshuo(myself, upwd, friend, save_path)
-    shuoshuo_analysis('d:/me.csv')
+    shuoshuo_analysis('d:/ss.csv')
